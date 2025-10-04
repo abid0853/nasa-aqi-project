@@ -7,6 +7,10 @@ import os
 import math
 from datetime import datetime, timedelta
 import openrouteservice
+import os
+import requests
+import zipfile
+import io
 
 # --- Globals and Setup ---
 MODELS_DIR = 'models'
@@ -124,7 +128,35 @@ def calculate_interpolated_aqi(user_lat, user_lon):
     pollutants = closest_station_data.get('pollutants', {}) if closest_station_data else {}
     return interpolated_aqi, pollutants
 
-# --- Flask API Setup ---
+
+
+# --- Helper function for downloading ---
+# --- Helper function for downloading ---
+def download_and_unzip_models():
+    # URL to your 'models.zip' file
+    MODELS_ZIP_URL = "https://drive.google.com/uc?export=download&id=1QykG_O3vw6YGu9NFpR11QIIGTKpHdTr1"
+    
+    # Path to the local models directory
+    MODELS_DIR = 'models'
+    
+    # If the directory already exists and is not empty, skip download
+    if os.path.exists(MODELS_DIR) and os.listdir(MODELS_DIR):
+        print("✅ Models directory already exists. Skipping download.")
+        return
+
+    print("Downloading and extracting models...")
+    try:
+        r = requests.get(MODELS_ZIP_URL, stream=True)
+        r.raise_for_status()
+        
+        # Unzip directly from the response content
+        with zipfile.ZipFile(io.BytesIO(r.content)) as z:
+            z.extractall('.') # Extract to the root directory
+        print("✅ Models downloaded and extracted successfully.")
+    except Exception as e:
+        print(f"🔥 Failed to download or extract models: {e}")
+
+
 app = Flask(__name__)
 CORS(app)
 
