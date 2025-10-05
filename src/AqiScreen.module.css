@@ -1,176 +1,477 @@
-/* --- Login Page Styles --- */
-@import url('https://fonts.googleapis.com/css?family=Montserrat:400,800');
-.loginContainerWrapper { font-family: 'Montserrat', sans-serif; background: #f6f5f7; display: flex; justify-content: center; align-items: center; flex-direction: column; height: 100vh; }
-.loginContainer { background-color: #fff; border-radius: 10px; box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22); position: relative; overflow: hidden; width: 768px; max-width: 100%; min-height: 480px; }
-.loginContainer h1 { font-weight: bold; margin: 0; }
-.loginContainer p { font-size: 14px; font-weight: 100; line-height: 20px; letter-spacing: 0.5px; margin: 20px 0 30px; }
-.loginContainer button { border-radius: 20px; border: 1px solid #6c3483; background-color: #6c3483; color: #FFFFFF; font-size: 12px; font-weight: bold; padding: 12px 45px; letter-spacing: 1px; text-transform: uppercase; transition: transform 80ms ease-in; cursor: pointer; }
-.loginContainer button:active { transform: scale(0.95); }
-.loginContainer button.ghost { background-color: transparent; border-color: #FFFFFF; }
-.loginContainer form { background-color: #FFFFFF; display: flex; align-items: center; justify-content: center; flex-direction: column; padding: 0 50px; height: 100%; text-align: center; }
-.loginContainer input { background-color: #eee; border: none; padding: 12px 15px; margin: 8px 0; width: 100%; }
-.formContainer { position: absolute; top: 0; height: 100%; transition: all 0.6s ease-in-out; }
-.signInContainer { left: 0; width: 50%; z-index: 2; }
-.signUpContainer { left: 0; width: 50%; opacity: 0; z-index: 1; }
-.overlayContainer { position: absolute; top: 0; left: 50%; width: 50%; height: 100%; overflow: hidden; transition: transform 0.6s ease-in-out; z-index: 100; }
-.overlay { background: #6c3483; background: linear-gradient(to right, #8e44ad, #6c3483); background-repeat: no-repeat; background-size: cover; background-position: 0 0; color: #FFFFFF; position: relative; left: -100%; height: 100%; width: 200%; transform: translateX(0); transition: transform 0.6s ease-in-out; }
-.overlayPanel { position: absolute; display: flex; align-items: center; justify-content: center; flex-direction: column; padding: 0 40px; text-align: center; top: 0; height: 100%; width: 50%; transform: translateX(0); transition: transform 0.6s ease-in-out; }
-.overlayLeft { transform: translateX(-20%); }
-.overlayRight { right: 0; transform: translateX(0); }
-.loginContainer.rightPanelActive .signInContainer { transform: translateX(100%); }
-.loginContainer.rightPanelActive .overlayContainer { transform: translateX(-100%); }
-.loginContainer.rightPanelActive .signUpContainer { transform: translateX(100%); opacity: 1; z-index: 5; }
-.loginContainer.rightPanelActive .overlay { transform: translateX(50%); }
-.loginContainer.rightPanelActive .overlayLeft { transform: translateX(0); }
-.loginContainer.rightPanelActive .overlayRight { transform: translateX(20%); }
+/* =============== Authentication Pages Styles =============== */
 
-/* --- Original App Styles --- */
-.backgroundVideo { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; z-index: 0; }
-.container { display: flex; justify-content: center; align-items: center; min-height: 100vh; padding: 1rem; background-color: #111827; }
-.screen { width: 100%; max-width: 400px; height: 850px; color: white; border-radius: 24px; border: 1px solid rgba(255, 255, 255, 0.2); overflow: hidden; display: flex; flex-direction: column; position: relative; background: #e5f3fc; }
-.pageContent, .navBar, .statusText { position: relative; z-index: 1; background: transparent; }
-.pageContent { flex: 1; overflow-y: auto; padding: 1rem; display: flex; flex-direction: column; gap: 1.5rem; }
-.header { text-align: center; padding: 2rem 1rem 1rem; }
-.subtitle { opacity: 0.8; }
-.mainContent { display: flex; flex-direction: column; align-items: center; }
-.currentWeather { text-align: center; }
-.liveAqiValue { font-size: 6rem; font-weight: 600; margin: 1rem 0; }
-.advice { font-weight: 500; }
-.forecastGrid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; width: 100%; margin: 1.5rem 0; }
-.forecastCard { background-color: rgba(0, 0, 0, 0.2); border-radius: 12px; padding: 1rem; text-align: center; }
-.forecastCard p { margin: 0 0 0.5rem 0; font-weight: 300; opacity: 0.8; }
-.forecastCard span { font-size: 1.5rem; font-weight: 500; }
-.stationText { font-size: 0.8rem; opacity: 0.7; text-align: center; }
-.weatherHeaderTemp { font-size: 4.5rem; font-weight: 300; margin: 0; }
-.weatherHeaderDesc { font-size: 1.2rem; text-transform: capitalize; opacity: 0.8; margin-top: 0.25rem; }
-.hourlyContainer { display: flex; justify-content: space-around; text-align: center; background-color: rgba(0, 0, 0, 0.2); padding: 1rem; border-radius: 12px; }
-.hourItem { display: flex; flex-direction: column; align-items: center; gap: 4px; font-size: 0.9rem; }
-.hourItem img { width: 40px; height: 40px; }
-.detailsGrid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
-.detailItem { background-color: rgba(0, 0, 0, 0.2); border-radius: 12px; padding: 1rem; display: flex; align-items: center; gap: 1rem; }
-.detailItem p { margin: 0; font-size: 0.8rem; opacity: 0.8; }
-.detailItem span { font-size: 1.1rem; font-weight: 500; }
-.navBar { background: rgba(0, 0, 0, 0.3); display: flex; justify-content: space-around; padding: 0.5rem 1rem; border-top: 1px solid rgba(255, 255, 255, 0.2); }
-.navItem { background: none; border: none; color: #dbeafe; cursor: pointer; display: flex; flex-direction: column; align-items: center; gap: 0.25rem; padding: 0.5rem; width: auto; position: relative; }
-.navItem span { font-size: 0.75rem; }
-.navItem.active { color: white; }
-.navItem .activeBar { height: 4px; width: 32px; border-radius: 9999px; background-color: #7dd3fc; position: absolute; top: -2px; }
-.statusText { flex: 1; display: flex; justify-content: center; align-items: center; padding: 4rem 2rem; text-align: center; font-size: 1.25rem; }
-.profileHeader { text-align: center; padding: 1rem; color: #1d2c4d; font-weight: bold; }
-.sectionTitle { font-size: 1rem; font-weight: bold; text-transform: uppercase; color: #1d2c4d; padding: 0 1rem; margin-bottom: -0.5rem; }
-.profileCard { display: flex; align-items: center; background-color: rgba(255, 255, 255, 0.5); padding: 12px; border-radius: 6px; margin: 1rem; }
-.profileIcon { background-color: #3a6ea5; color: white; width: 40px; height: 40px; border-radius: 50%; display: flex; justify-content: center; align-items: center; font-weight: bold; font-size: 1.2rem; margin-right: 12px; }
-.profileInfo { color: #1d2c4d; }
-.profileInfo .name { font-weight: bold; font-size: 1rem; }
-.profileInfo .email { font-size: 0.8rem; opacity: 0.8; }
-.optionList { flex-grow: 1; background-color: rgba(255, 255, 255, 0.4); margin: 0 1rem 1rem 1rem; border-radius: 6px; overflow: hidden; }
-.optionItem { padding: 14px 16px; border-bottom: 1px solid rgba(0, 0, 0, 0.1); display: flex; justify-content: space-between; align-items: center; font-weight: 500; font-size: 1rem; color: #1d2c4d; cursor: pointer; transition: background-color 0.2s; }
-.optionItem:last-child { border-bottom: none; }
-.optionItem:hover { background-color: rgba(255, 255, 255, 0.7); }
-.mapContainer { flex-grow: 1; border-radius: 12px; overflow: hidden; border: 1px solid rgba(255, 255, 255, 0.2); z-index: 1; }
-.tripForm { display: flex; flex-direction: column; gap: 0.5rem; margin-bottom: 1rem; }
-.tripForm input { background-color: rgba(0, 0, 0, 0.2); border: 1px solid rgba(255, 255, 255, 0.2); border-radius: 8px; padding: 0.75rem; color: white; font-size: 1rem; }
-.tripForm input::placeholder { color: rgba(255, 255, 255, 0.5); }
-.tripForm button { background-color: #7dd3fc; color: #111827; border: none; padding: 0.75rem; border-radius: 8px; font-weight: bold; cursor: pointer; }
-.tripForm button:disabled { background-color: #a0aec0; cursor: not-allowed; }
-.errorText { color: #f87171; text-align: center; margin: 0 0 1rem 0; }
-.legendContainer { margin-top: 1rem; padding: 1rem; background-color: rgba(0,0,0,0.2); border-radius: 12px; }
-.legend { display: flex; justify-content: center; gap: 1.5rem; }
-.legend div { display: flex; align-items: center; gap: 0.5rem; }
-.legend span { width: 15px; height: 15px; border-radius: 50%; }
-.routeInfo { text-align: center; margin-top: 1rem; opacity: 0.9; font-size: 0.9rem; }
-.nearbySection { width: 100%; margin-top: 2rem; border-top: 1px solid rgba(255, 255, 255, 0.2); padding-top: 1.5rem; }
-.searchBox { background-color: rgba(0, 0, 0, 0.2); border-radius: 10px; padding: 8px 12px; display: flex; align-items: center; margin-bottom: 20px; border: 1px solid rgba(255, 255, 255, 0.2); }
-.searchIcon { color: rgba(255, 255, 255, 0.7); margin-right: 10px; }
-.searchBox input { border: none; background: transparent; color: #fff; width: 100%; outline: none; font-size: 14px; }
-.searchBox input::placeholder { color: rgba(255, 255, 255, 0.5); }
-.listTitle { font-size: 1rem; font-weight: 500; margin-bottom: 1rem; opacity: 0.9; text-align: center; }
-.aqiCard { background-color: rgba(0, 0, 0, 0.2); border-radius: 15px; padding: 10px 15px; margin-bottom: 12px; }
-.aqiCard p { margin: 4px 0; font-size: 14px; }
-.stationLocation { opacity: 0.8; }
-.level { font-weight: bold; }
-.good { color: #4ade80; }
-.moderate { color: #facc15; }
-.unhealthySensitive { color: #fb923c; }
-.unhealthy { color: #f87171; }
-
-/* --- Styles for the Camera Page --- */
-.cameraWrapper {
-position: relative;
-flex-grow: 1;
-background-color: #000;
-border-radius: 12px;
-overflow: hidden;
-display: flex;
-justify-content: center;
-align-items: center;
-}
-.cameraFeed {
-width: 100%;
-height: 100%;
-object-fit: cover;
-}
-.aqiOverlay {
-position: absolute;
-bottom: 20px;
-left: 20px;
-right: 20px;
-padding: 1rem;
-border-radius: 15px;
-text-align: center;
-font-weight: bold;
-color: white;
-background: rgba(0, 0, 0, 0.5);
-backdrop-filter: blur(10px);
--webkit-backdrop-filter: blur(10px);
-border: 1px solid rgba(255, 255, 255, 0.2);
-}
-.overlayAqiValue {
-font-size: 3rem;
-font-weight: 700;
-}
-.overlayAqiText {
-font-size: 1rem;
-font-weight: 500;
-margin-bottom: 1rem;
-text-transform: uppercase;
-letter-spacing: 1px;
-}
-.pollutantGrid {
-display: grid;
-grid-template-columns: repeat(auto-fit, minmax(60px, 1fr));
-gap: 8px;
-font-size: 0.8rem;
-}
-.pollutantGrid div {
-background: rgba(0,0,0,0.3);
-padding: 5px;
-border-radius: 5px;
-display: flex;
-flex-direction: column;
-}
-.pollutantGrid div span {
-font-size: 0.65rem;
-opacity: 0.8;
-}
-.aqiOverlay.good { border-top: 5px solid #4ade80; }
-.aqiOverlay.moderate { border-top: 5px solid #facc15; }
-.aqiOverlay.unhealthySensitive { border-top: 5px solid #fb923c; }
-.aqiOverlay.unhealthy { border-top: 5px solid #f87171; }
-
-/* --- NEW: Styles for the Forecast Page Chart --- */
-.chartContainer {
-background-color: rgba(0, 0, 0, 0.2);
-padding: 1rem;
-border-radius: 12px;
-border: 1px solid rgba(255, 255, 255, 0.1);
-}
-.forecast-screen {
-  background-color: black;
-  color: white;
+.authPageWrapper {
   min-height: 100vh;
-  padding: 1rem;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #222;
+  font-family: "Poppins", "Segoe UI", sans-serif;
+  color: #fff;
 }
-ForcastPage{
-    background-color: black;
+
+/* Device-like container for both Login and Sign Up */
+.device {
+  width: 380px;
+  max-width: 92vw;
+  height: 780px;
+  border-radius: 20px;
+  padding: 28px;
+  box-sizing: border-box;
+  background: linear-gradient(
+    to bottom,
+    rgba(167, 216, 255, 1) 16%,
+    rgba(153, 203, 244, 1) 24%,
+    rgba(108, 164, 210, 1) 46%,
+    rgba(0, 71, 128, 1) 100%
+  );
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.6),
+    inset 0 -6px 18px rgba(0, 0, 0, 0.12);
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
+
+/* Inner panel */
+.panel {
+  width: 85%;
+  height: 85%;
+  background: linear-gradient(
+    to bottom,
+    rgba(255, 255, 255, 0.05),
+    rgba(255, 255, 255, 0.02)
+  );
+  border-radius: 10px;
+  border: 3px solid rgba(0, 0, 0, 0.85);
+  padding: 28px 22px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+.avatar {
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.85);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 4px;
+}
+
+.avatar svg {
+  width: 44px;
+  height: 44px;
+}
+
+/* Title for Login/Sign Up */
+.title {
+  margin: 8px 0 14px 0;
+  font-size: 20px;
+  letter-spacing: 0.4px;
+  color: rgba(255, 255, 255, 0.95);
+  font-weight: 600;
+}
+
+.authForm {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  align-items: stretch;
+}
+
+/* Input field styles for both forms */
+.input {
+  position: relative;
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 24px;
+  padding: 12px 16px;
+  border: 1px solid rgba(0, 0, 0, 0.25);
+  color: #fff;
+}
+
+.input input,
+.input select {
+  width: 100%;
+  background: transparent;
+  border: none;
+  outline: none;
+  color: #ffffffcc;
+  font-size: 15px;
+  font-family: "Poppins", "Segoe UI", sans-serif;
+}
+
+.input select {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  cursor: pointer;
+}
+
+.input select option {
+  background-color: #004780;
+  color: #fff;
+}
+
+/* Link to toggle between forms */
+.toggleLinkContainer {
+  margin-top: 15px;
+  font-size: 14px;
+  color: #fff;
+  text-align: center;
+}
+
+.toggleLinkContainer a {
+  color: #cfe9ff;
+  text-decoration: none;
+  font-weight: 700;
+  margin-left: 6px;
+  cursor: pointer;
+}
+
+/* Button for both forms */
+.authButton {
+  margin-top: 10px;
+  align-self: center;
+  background: linear-gradient(to bottom, rgba(0, 71, 128, 0.95), rgba(0, 49, 90, 0.95));
+  padding: 10px 36px;
+  border-radius: 18px;
+  border: none;
+  color: white;
+  font-weight: 800;
+  letter-spacing: 0.8px;
+  cursor: pointer;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.35);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.authButton:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.45);
+}
+
+/* ============================================================= */
+/* =========== Main Application Styles (No Changes) ============ */
+/* ============================================================= */
+
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background-color: #000;
+  overflow: hidden;
+}
+
+.screen {
+  width: 428px;
+  height: 926px;
+  max-width: 100vw;
+  max-height: 100vh;
+  border-radius: 40px;
+  overflow: hidden;
+  position: relative;
+  background-color: #1a1a1a;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 0 40px rgba(0,0,0,0.5);
+  border: 1px solid #333;
+}
+
+.backgroundVideo {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: 0;
+  filter: brightness(0.7);
+}
+
+.pageContent {
+  padding: 24px;
+  padding-bottom: 90px;
+  z-index: 1;
+  overflow-y: auto;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0.4) 0%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0.6) 100%);
+}
+
+.statusText {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  font-size: 1.2rem;
+  color: #ccc;
+  z-index: 5;
+  text-align: center;
+  padding: 20px;
+}
+
+.header {
+  text-align: center;
+  margin-bottom: 24px;
+}
+
+.header h1 {
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin: 0;
+}
+
+.subtitle {
+  font-size: 1rem;
+  opacity: 0.7;
+}
+
+.mainContent {
+  flex-grow: 1;
+}
+
+.currentWeather {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 20px;
+  padding: 20px;
+  text-align: center;
+  margin-bottom: 20px;
+  backdrop-filter: blur(10px);
+}
+
+.liveAqiValue {
+  font-size: 4rem;
+  font-weight: 800;
+  margin: 10px 0;
+}
+
+.advice {
+  font-size: 1.1rem;
+  font-weight: 500;
+  color: #f0f0f0;
+}
+
+.forecastGrid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.forecastCard {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 15px;
+  padding: 15px;
+  text-align: center;
+}
+.forecastCard p {
+  margin: 0 0 8px 0;
+  opacity: 0.8;
+  font-size: 0.9rem;
+}
+.forecastCard span {
+  font-size: 1.5rem;
+  font-weight: 600;
+}
+
+.stationText {
+  text-align: center;
+  font-size: 0.8rem;
+  opacity: 0.6;
+  margin-bottom: 20px;
+}
+
+.nearbySection {
+  margin-top: 1rem;
+}
+
+.searchBox {
+  display: flex;
+  align-items: center;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 20px;
+  padding: 8px 15px;
+  margin-bottom: 1rem;
+}
+
+.searchBox input {
+  flex-grow: 1;
+  background: transparent;
+  border: none;
+  color: white;
+  outline: none;
+  font-size: 1rem;
+  margin-left: 10px;
+}
+.searchBox input::placeholder {
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.listTitle {
+  font-size: 1.2rem;
+  margin: 1.5rem 0 1rem 0;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.aqiCard {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 15px;
+  padding: 15px;
+  margin-bottom: 12px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.level {
+  padding: 4px 10px;
+  border-radius: 12px;
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+.good { background-color: #22c55e; color: white; }
+.moderate { background-color: #f59e0b; color: white; }
+.unhealthySensitive { background-color: #ef4444; color: white; }
+.unhealthy { background-color: #8b5cf6; color: white; }
+
+/* Weather Page */
+.weatherHeaderTemp {
+  font-size: 5rem;
+  font-weight: 700;
+  margin: 0;
+}
+.weatherHeaderDesc {
+  font-size: 1.2rem;
+  opacity: 0.8;
+  margin-top: -10px;
+}
+.hourlyContainer {
+  display: flex;
+  overflow-x: auto;
+  gap: 15px;
+  padding: 15px 0;
+  margin-bottom: 20px;
+}
+.hourItem {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  min-width: 60px;
+}
+.hourItem img { width: 40px; height: 40px;}
+
+.detailsGrid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 15px;
+}
+.detailItem {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  background: rgba(255, 255, 255, 0.1);
+  padding: 15px;
+  border-radius: 15px;
+}
+.detailItem p { margin: 0; opacity: 0.7; font-size: 0.9rem; }
+.detailItem span { font-size: 1.1rem; font-weight: 600; }
+
+/* Profile Page */
+.profileHeader { text-align: left; }
+.sectionTitle { font-size: 1.2rem; opacity: 0.8; margin-bottom: 1rem; }
+.profileCard { display: flex; align-items: center; gap: 15px; background: rgba(255, 255, 255, 0.1); padding: 15px; border-radius: 15px; margin-bottom: 2rem; }
+.profileIcon { width: 50px; height: 50px; border-radius: 50%; background: #4f46e5; display: flex; justify-content: center; align-items: center; font-size: 1.5rem; font-weight: 600; }
+.name { font-size: 1.2rem; font-weight: 600; margin: 0; }
+.email { opacity: 0.7; margin: 0; }
+.optionList { display: flex; flex-direction: column; gap: 1rem; }
+.optionItem { display: flex; justify-content: space-between; align-items: center; background: rgba(255, 255, 255, 0.1); padding: 15px; border-radius: 15px; cursor: pointer; }
+
+/* Map/Trip Planner Page */
+.tripForm { display: flex; flex-direction: column; gap: 10px; margin-bottom: 1rem; }
+.tripForm input { background: rgba(255, 255, 255, 0.1); border: 1px solid rgba(255, 255, 255, 0.2); color: white; padding: 12px; border-radius: 10px; font-size: 1rem; }
+.tripForm button { background: #4f46e5; color: white; border: none; padding: 12px; border-radius: 10px; font-size: 1rem; font-weight: 600; cursor: pointer; }
+.tripForm button:disabled { background: #333; cursor: not-allowed; }
+.mapContainer {
+  height: 600px;
+  width: 600px;
+  border-radius: 15px;
+  overflow: hidden;
+  margin-bottom: 1rem;
+}
+.legendContainer { background: rgba(0, 0, 0, 0.3); padding: 10px; border-radius: 10px; }
+.legend { display: flex; gap: 20px; align-items: center; }
+.legend div { display: flex; align-items: center; gap: 8px; }
+.legend span { width: 20px; height: 5px; border-radius: 3px; }
+.routeInfo { font-size: 0.9rem; margin-top: 10px; opacity: 0.9; }
+
+/* Camera Page */
+.cameraWrapper { position: relative; width: 100%; height: 100%; overflow: hidden; background: #000; }
+.cameraFeed { width: 100%; height: 100%; object-fit: cover; }
+.aqiOverlay { position: absolute; bottom: 90px; left: 0; right: 0; padding: 20px; background: rgba(0,0,0,0.5); backdrop-filter: blur(10px); color: white; text-align: center;}
+.overlayAqiValue { font-size: 3rem; font-weight: 700; }
+.overlayAqiText { font-size: 1rem; margin-bottom: 1rem; }
+.pollutantGrid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; font-size: 0.9rem; }
+.pollutantGrid span { display: block; opacity: 0.7; font-size: 0.8rem; }
+
+/* Forecast Page Chart */
+.chartContainer {
+    background: rgba(255, 255, 255, 0.05);
+    padding: 1rem;
+    border-radius: 15px;
+}
+
+/* Nav Bar */
+.navBar {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 85px;
+  background: rgba(20, 20, 20, 0.7);
+  backdrop-filter: blur(20px);
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  z-index: 100;
+}
+
+.navItem {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+  color: #888;
+  font-size: 0.7rem;
+  background: none;
+  border: none;
+  cursor: pointer;
+  position: relative;
+  padding: 10px;
+}
+
+.navItem.active {
+  color: white;
+}
+
+.activeBar {
+    position: absolute;
+    top: -1px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 40px;
+    height: 3px;
+    background-color: #fff;
+    border-radius: 2px;
+}
+

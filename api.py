@@ -7,16 +7,12 @@ import os
 import math
 from datetime import datetime, timedelta
 import openrouteservice
-import os
-import requests
-import zipfile
-import io
 
-# --- Globals and Setup ---
+
 MODELS_DIR = 'models'
 DATA_FILE = "city_day.csv"
 
-# Check if the forecast feature is available
+
 forecast_feature_available = os.path.exists(MODELS_DIR) and len(os.listdir(MODELS_DIR)) > 0
 if forecast_feature_available:
     print(f"✅ {len(os.listdir(MODELS_DIR))} prediction models found. Forecast feature is enabled.")
@@ -24,12 +20,11 @@ else:
     print("⚠️ Warning: 'models' directory is empty or not found. Forecast feature will be disabled.")
     print("➡️ To enable, run 'python train_all_models.py' to create the models.")
 
-# --- API Keys ---
+
 WAQI_TOKEN = "863296fb81e839b073505ca569860cdf03f1ce80"
 WEATHER_API_KEY = "8724fb5e1424446a9f0152514250110"
 ORS_API_KEY = "eyJvcmciOiI1YjNjZTM1OTc4NTExMTAwMDFjZjYyNDgiLCJpZCI6IjliYjU2NGQxNzJiMzQwYWU5ZGI3ZTI5NTQ3ZDVhZTBlIiwiaCI6Im11cm11cjY0In0="
 
-# --- Helper Functions ---
 def get_coords_from_name(location_name):
     url = f"https://nominatim.openstreetmap.org/search?q={location_name}&format=json&limit=1"
     try:
@@ -128,35 +123,7 @@ def calculate_interpolated_aqi(user_lat, user_lon):
     pollutants = closest_station_data.get('pollutants', {}) if closest_station_data else {}
     return interpolated_aqi, pollutants
 
-
-
-# --- Helper function for downloading ---
-# --- Helper function for downloading ---
-def download_and_unzip_models():
-    # URL to your 'models.zip' file
-    MODELS_ZIP_URL = "https://drive.google.com/uc?export=download&id=1QykG_O3vw6YGu9NFpR11QIIGTKpHdTr1"
-    
-    # Path to the local models directory
-    MODELS_DIR = 'models'
-    
-    # If the directory already exists and is not empty, skip download
-    if os.path.exists(MODELS_DIR) and os.listdir(MODELS_DIR):
-        print("✅ Models directory already exists. Skipping download.")
-        return
-
-    print("Downloading and extracting models...")
-    try:
-        r = requests.get(MODELS_ZIP_URL, stream=True)
-        r.raise_for_status()
-        
-        # Unzip directly from the response content
-        with zipfile.ZipFile(io.BytesIO(r.content)) as z:
-            z.extractall('.') # Extract to the root directory
-        print("✅ Models downloaded and extracted successfully.")
-    except Exception as e:
-        print(f"🔥 Failed to download or extract models: {e}")
-
-
+# --- Flask API Setup ---
 app = Flask(__name__)
 CORS(app)
 
@@ -285,5 +252,3 @@ def get_clean_route():
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
-if __name__ == "__main__":
-    app.run(debug=True, port=5000)
